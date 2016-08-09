@@ -11,6 +11,7 @@ VIM_FOLDER = HOME_FOLDER + "/.vim";
 SPECTACLE_URL = "https://s3.amazonaws.com/spectacle/downloads/Spectacle+1.0.6.zip";
 NOTES_SYNTAX_URL = "https://github.com/abertrand13/notes-syntax.git";
 SOLARIZED_VIM_URL = "git://github.com/altercation/vim-colors-solarized.git";
+SOLARIZED_TERMINAL_URL = "https://github.com/tomislav/osx-terminal.app-colors-solarized";
 
 def printHeader(text)
 	puts "";
@@ -81,6 +82,7 @@ end
 
 printHeader("STEP SOMETHING :: Configure Oh-my-zsh");
 printSubHeader("STEP :: Download antigen");
+puts "Skipping this for now...";
 # git clone https://github.com/zsh-users/antigen.git
 
 printHeader("STEP SOMETHING :: Solarized Theme for All the Things");
@@ -91,6 +93,14 @@ else
 	puts "Already downloaded."
 end
 
+printSubHeader("Downloading solarized theme for terminal");
+if not File.directory?("#{DOWNLOADS_FOLDER}/osx-terminal.app-colors-solarized") then
+	system "cd #{DOWNLOADS_FOLDER} && git clone #{SOLARIZED_TERMINAL_URL}";
+else
+	puts "Solarized theme for terminal already downloaded"
+end
+puts "To set solarized as your default theme, run 'open ~/Downloads/osx-terminal.app-colors-solarized', then open Terminal preferences and choose the Solarized scheme as default";
+
 printSubHeader("Set .vimrc");
 if File.read("#{HOME_FOLDER}/.vimrc").include?("set background=dark") then
 	puts "vimrc already configured";
@@ -98,7 +108,6 @@ else
 	system "echo 'set background=dark\ncolorscheme solarized' >> #{HOME_FOLDER}/.vimrc";
 	puts "vimrc modified";
 end
-
 
 
 
